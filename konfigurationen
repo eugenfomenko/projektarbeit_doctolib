@@ -1,0 +1,512 @@
+# Doctolib – Technische Dokumentation
+
+---
+
+# GDT-Anbindung
+
+> **Hinweis:** Feature-Flag **support-medical-devices** muss aktiviert sein.
+
+## Zweck
+
+Die **GDT-Schnittstelle (Gerätedatentransfer)** ermöglicht die Kommunikation zwischen Doctolib und medizinischen Geräten.
+
+Dabei gibt es zwei Richtungen:
+
+- **GDT Export** → Auftrag von Doctolib an das Gerät senden.
+- **GDT Import** → Untersuchungsergebnis vom Gerät zurück nach Doctolib übernehmen.
+
+---
+
+# I. GDT Export
+
+## Auftrag aus der Patientenakte an ein GDT-Gerät senden
+
+### 1. Einstellungen öffnen
+
+```
+Doctolib
+→ Erweiterte Einstellungen
+→ Geräteintegration & Verbindung
+```
+
+---
+
+### 2. Neue Verbindung erstellen
+
+- Verbindung erstellen
+- **GDT Export** auswählen
+
+> Der Export bedeutet:
+> Doctolib erstellt eine GDT-Datei und legt sie im angegebenen Ordner ab. Das medizinische Gerät liest diese Datei anschließend ein.
+
+---
+
+### 3. Gerät anlegen
+
+Folgende Angaben hinterlegen:
+
+| Feld | Beschreibung |
+|------|--------------|
+| Name | z.B. „EKG oben“ |
+| Gerätetyp | Passenden Gerätetyp auswählen |
+| Marke | Hersteller auswählen oder frei eintragen |
+
+---
+
+### 4. Export konfigurieren
+
+Folgende Werte hinterlegen:
+
+| Feld | Beispiel |
+|------|-----------|
+| Dateiname | `test.gdt` |
+| Ordnerpfad | Exportordner des Geräts |
+| Zeichensatz | gemäß Hersteller |
+| Untersuchungsgruppe | eindeutige ID |
+| Untersuchungscode | eindeutiger Code |
+
+---
+
+### 5. Verbindung speichern
+
+Auf **Erstellen** klicken.
+
+---
+
+# II. GDT Import
+
+## Befunde vom Gerät übernehmen
+
+### 1. DDV Einstellungen öffnen
+
+```
+Burger-Menü
+→ Datei
+→ Einstellungen
+→ Synchronisierter Ordner
+```
+
+---
+
+### 2. Neuen Ordner hinzufügen
+
+Es muss ein Ordner erstellt werden, in dem das medizinische Gerät seine PDF-Befunde speichert.
+
+---
+
+### 3. Ordnerpfad hinterlegen
+
+Den Speicherort auswählen und speichern.
+
+---
+
+# Mobile Kartenterminals
+
+## Zweck
+
+Mobile Kartenterminals (MCR) ermöglichen das Einlesen der elektronischen Gesundheitskarte außerhalb der Praxis.
+
+Typischer Einsatz:
+
+- Hausbesuche
+- Pflegeeinrichtungen
+- Außendienst
+
+Die Daten werden zunächst lokal gespeichert und später in das Praxisverwaltungssystem übertragen.
+
+---
+
+## Unterstützte Karten
+
+- eGK
+- KVK
+
+---
+
+## Unterstützte Geräte
+
+- Ingenico (Worldline) Orga 930 Care
+- Ingenico (Worldline) Orga 930 M Online
+- Cherry ST-1530
+
+---
+
+# Einrichtung
+
+## Schritt 1
+
+Hersteller-Treiber installieren.
+
+### Worldline
+
+Software & Treiber herunterladen.
+
+### Cherry
+
+Treiber herunterladen.
+
+---
+
+## Schritt 2
+
+Treiberpfad ermitteln.
+
+### Windows
+
+#### Ingenico
+
+```
+C:\Program Files (x86)\Ingenico Healthcare\ORGA_6000\Tools\Ctorg32_4_developer\x64\CTORG64.lib
+```
+
+#### Cherry
+
+```
+C:\Program Files (x86)\CHERRY\ST1530\Tools\Ctorg32_4_developer\x64\CTORG64.lib
+```
+
+---
+
+### macOS
+
+```
+/Library/Frameworks/Ctorg32.framework/Versions/Current/Ctorg32
+```
+
+Zusätzlich:
+
+```bash
+sudo chown -R $(whoami):staff /Library/Frameworks/Ctorg32.framework/Versions/Current/
+```
+
+---
+
+# Konfiguration in DDV
+
+**Wichtig**
+
+Der Kartenleser darf zu Beginn **nicht angeschlossen** sein.
+
+## Vorgehen
+
+1. DDV starten.
+2. Mit einem Benutzer anmelden, der eine EHR-Lizenz besitzt.
+3. Einstellungen → Mobiler Kartenleser öffnen.
+4. Treiberpfad eintragen.
+5. Einstellungen schließen.
+6. Kartenleser anschließen.
+
+---
+
+# Einschränkungen
+
+Die vorhandenen Treiber sind veraltet.
+
+Nicht unterstützt:
+
+- Apple Silicon
+- ARM64-Macs
+
+---
+
+# TI- & Konnektor-Konfiguration
+
+# Was ist die TI?
+
+Die **Telematikinfrastruktur (TI)** ist das sichere Netzwerk des deutschen Gesundheitswesens.
+
+Sie verbindet:
+
+- Arztpraxen
+- Krankenhäuser
+- Krankenkassen
+- Patienten
+- Apotheken
+
+---
+
+# Ziele
+
+- sichere Kommunikation
+- digitale Patientenakte
+- eRezept
+- KIM
+- TI-Messenger
+- Telemedizin
+- sichere Authentifizierung
+
+---
+
+# Bestandteile
+
+## eGK
+
+Elektronische Gesundheitskarte.
+
+---
+
+## ePA
+
+Elektronische Patientenakte.
+
+---
+
+## KIM
+
+Kommunikation im Medizinwesen.
+
+---
+
+## TI Messenger
+
+Sicherer Chat.
+
+---
+
+## eRezept
+
+Digitale Rezepte.
+
+---
+
+# Anschluss einer Praxis
+
+## Voraussetzungen
+
+- Registrierung
+- IT-Dienstleister
+- zertifizierte Hardware
+
+---
+
+## Benötigte Komponenten
+
+### Konnektor
+
+Beispiele:
+
+- Secunet
+- KoCoBox
+- RISE
+
+---
+
+### Kartenterminal
+
+Zum Einlesen von
+
+- eGK
+- HBA
+- SMC-B
+
+---
+
+### HBA
+
+Heilberufsausweis.
+
+---
+
+### SMC-B
+
+Institutionskarte.
+
+---
+
+### PVS
+
+Praxisverwaltungssystem.
+
+---
+
+# Voraussetzungen für Doctolib
+
+Erforderlich sind:
+
+- lokale EHR-Installation
+- HCP Account
+- EHR Lizenz
+- Administratorrechte
+- Organisation eingerichtet
+- Benutzer eingerichtet
+- ITSP Account
+- KIM+
+
+---
+
+# Aufgaben des ITSP
+
+Installation von:
+
+- Konnektor
+- Kartenterminals
+- Drucker
+- Scanner
+- Telefon
+- Fax
+
+---
+
+# Konnektor-Konfiguration
+
+Pfad:
+
+```
+Erweiterte Einstellungen
+→ TI-Konfiguration
+```
+
+---
+
+## Angaben
+
+| Feld | Beschreibung |
+|------|--------------|
+| Standort | Praxisstandort |
+| Mandanten-ID | BSNR / nBSNR |
+| Name | frei wählbar |
+| Host | IP-Adresse des Konnektors |
+| Port | 443 |
+| Client-Zertifikat | importieren |
+| Zertifikatspasswort | eingeben |
+| Server-Zertifikat | importieren |
+| Client-System-ID | eindeutige Kennung |
+
+---
+
+Nach dem Speichern erfolgt automatisch ein Verbindungstest.
+
+---
+
+# TI-Arbeitsplätze
+
+Nach erfolgreicher Konnektor-Einrichtung müssen alle Arbeitsplätze eingerichtet werden.
+
+Jede DDV-Installation ist ein eigener Arbeitsplatz.
+
+---
+
+## Angaben
+
+| Feld | Beschreibung |
+|------|--------------|
+| Standort | Praxis |
+| Arbeitsplatz | Name laut Konnektor |
+| Host | IP-Adresse |
+| Port | eindeutiger Port |
+
+---
+
+Anschließend im **TI Control Center** die Konfiguration übernehmen.
+
+---
+
+# Direktdruck-Konfiguration
+
+## Voraussetzungen
+
+### Windows
+
+- Netzwerkdrucker
+
+### macOS
+
+- Netzwerkdrucker
+- USB-Drucker
+
+---
+
+## Unterstützte Drucker
+
+- IPP-Protokoll
+- PDF-Unterstützung
+
+---
+
+# Einrichtung
+
+## Schritt 1
+
+```
+DDV
+→ Einstellungen
+→ Drucker
+```
+
+---
+
+## Schritt 2
+
+"Drucker hinzufügen" auswählen.
+
+---
+
+## Schritt 3
+
+Benötigte Drucker markieren.
+
+---
+
+# Nicht kompatibler Drucker
+
+IP-Adresse oder Hostname in den Druckereinstellungen ermitteln.
+
+---
+
+# Druckkonfiguration
+
+Möglich sind:
+
+- Standarddrucker
+- Dokumentenspezifische Drucker
+
+---
+
+# Erweiterte Konfiguration
+
+Für jeden Dokumententyp kann ein eigener Drucker definiert werden.
+
+Beispiel:
+
+| Dokument | Drucker |
+|----------|----------|
+| AU | Drucker 1 |
+| Rezept | Drucker 2 |
+| Überweisung | Drucker 3 |
+
+---
+
+# Wichtige Hinweise
+
+- Der Schalter **Direktdruck verwenden** aktiviert bzw. deaktiviert sämtliche Direktdruckregeln.
+- Auch **Alle Konsultationsdokumente** gilt als eigener Dokumententyp und kann separat konfiguriert werden.
+
+---
+
+# Zusammenfassung
+
+## GDT
+
+- Export → Auftrag zum Gerät
+- Import → Befund zurück nach Doctolib
+
+## Mobiler Kartenleser
+
+- Treiber installieren
+- Treiberpfad hinterlegen
+- Erst danach Gerät anschließen
+
+## TI
+
+- Konnektor konfigurieren
+- Zertifikate importieren
+- TI-Arbeitsplätze anlegen
+
+## Direktdruck
+
+- Netzwerkdrucker verwenden
+- Dokumentenspezifische Druckregeln definieren
+- Direktdruck aktivieren
+````
+
+Dieses Format eignet sich direkt für **Obsidian**, **GitHub**, **VS Code**, **Typora** oder **MkDocs**.
